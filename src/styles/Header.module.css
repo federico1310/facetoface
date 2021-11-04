@@ -1,0 +1,384 @@
+.openHeader {
+	height: 80px;
+    position: fixed;
+    left: 0px;
+    width: 100%;
+    z-index: 100;
+    color: #FFFFFF;
+}
+.closedHeader {
+	height: 80px;
+    left: 0px;
+    width: 100%;
+    z-index: 100;
+    background-color: #FFFFFF;
+    position: fixed;
+    top: 0px;
+}
+.insideSection {
+    position: absolute !important;
+    box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 10%);
+}
+/* Estilos top header*/
+.topHeaderContainer {
+    flex-direction: row;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 80px;
+    margin: 0 auto;
+}
+.bottomHeaderContainer {
+    flex-direction: row;
+    display:flex;
+    justify-content: center;
+}
+.closedHeader .bottomHeaderContainer.show {
+    display: flex;
+    background-color: #FFFFFF;
+}
+.closedHeader .bottomHeaderContainer.hide {
+    display: none;
+}
+.logo {
+    display: flex;
+    justify-content: center;
+    width: 30%;
+    min-width: 300px;
+}
+.logoContainer {
+    height: 80px;
+    margin: 10px;
+    width: 106px;
+}
+.filterBar {
+    display: flex;
+    justify-content: center;
+}
+.filterBar li {
+    list-style-type: none;
+}
+.searchToggleButton {
+    display: flex;
+    width: 280px;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+    border-radius: 50px;
+    box-shadow: 1px 1px 3px 1px rgb(0 0 0 / 40%);
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.closedHeader .searchToggleButton.show {
+    display: flex;
+}
+.searchToggleButton.hide {
+    display: none;
+}
+.searchToggleButtonText {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    width: 160px;
+}
+.navList.show {
+    display: flex;
+}
+.navList.hide {
+    display: none;
+}
+.navLine {
+    border-bottom: 2px solid white; 
+    margin: 5px auto 0px auto;
+}
+.closedHeader .navLine {
+    border-bottom: 2px solid black;
+}
+.navLine.show {
+    width: 20px;
+}
+.navLine.hide {
+    width: 0px;
+}
+.userOptions {
+    display: flex;
+    justify-content: center;
+    width: 30%;
+    min-width: 300px;
+    align-items: center;
+}
+.accountModalPositionPivot {
+    position: relative;
+    width: 100px;
+    display: inline-block;
+}
+.accountMenuContainer {
+    width: 100%;
+    text-align: center;
+    border-radius: 50px;
+    background-color: #ffffff;
+    box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 20%);
+    display: flex;
+}
+.menuIconContainer {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.accountIconContainer {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.menuIconContainer:hover, 
+.accountIconContainer:hover {
+    background-color: #d8d8d8;
+}
+
+.modalAccountMenu {
+    position: absolute;
+    top: 120%;
+    background-color: #ffffff;
+    right: 0px;
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 10%);
+    display: none;
+    flex-flow: column;
+    z-index: 5;
+}
+.modalAccountMenu.show {
+    display: flex;
+}
+.modalAccountMenu.hide {
+    display: none;
+}
+.linkMenuAccount {
+    color: #676767;
+    cursor: pointer;
+}
+.textMenuAccount {
+    width: 100%;
+    padding: 10px 15px;
+    display: block;
+}
+.linkMenuAccount:hover {
+    background-color: #dcdcdc;
+}
+.linkMenuAccount:nth-child(1) {
+    color: black;
+    font-weight: bold;
+    border-radius: 10px 10px 0px 0px;
+}
+.linkMenuAccount:nth-child(2) {
+    border-bottom: 1px solid #b5b5b5;
+}
+.linkMenuAccount:last-child {
+    border-radius: 0px 0px 10px 10px;
+}
+
+.optionUserOptions {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.optionUserOptions:hover {
+    font-weight: bold;
+}
+.optionUserOptions:nth-child(2) {
+    width: 100px;
+}
+.openHeader .optionUserOptions {
+    color: #ffffff;
+}
+
+.closedHeader .optionUserOptions {
+    color: #000000;
+}
+
+.settingsIconContainer {
+    width: 40px;
+    height: 40px;
+    display: none !important;
+    padding: 7px;
+    border-radius: 50%;
+}
+.settingsIconContainer:hover {
+    background-color: #2760de;
+}
+
+.openHeader .settingsWhite {
+    display: inline-block;
+}
+.openHeader .settingsBlack {
+    display: none;
+}
+
+.closedHeader .settingsWhite {
+    display: none;
+}
+.closedHeader .settingsBlack {
+    display: inline-block;
+
+}
+/* Estilos filtros header */
+.formContainer {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    width: 70%;
+    background-color: white;
+    border-radius: 50px;
+    max-width: 700px;
+}
+.formStyles {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+}
+.inputContainer {
+    display: flex;
+    flex-flow: column;
+    padding: 0px 5px;
+    flex-grow: 1;
+}
+.inputContainer:nth-child(1) {
+    flex-grow: 2;
+}
+.inputContainer:nth-child(4) {
+    position: relative;
+}
+.inputContainer:last-child {
+    width: 20%;
+}
+.inputsSearch {
+    border-bottom: 1px solid #8c8c8c;
+    padding: 5px 0px 4px 0px;
+    width: 100%;
+    color: black;
+}
+.inputsSearch:focus, .inputsSearch:hover {
+    border-bottom: 2px solid black;
+    padding: 4px 0px 4px 0px;
+}
+.inputsSearch.empty {
+    color: #a2a2a2;
+}
+.inputsSearch.filled {
+    color: black;
+}
+.totalGuestsNumber {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    cursor: pointer;
+    line-height: 30px;
+    font-size: 16px;
+    text-align: center;
+    color: gray;
+    font-weight: bold;
+}
+.searchCounterOptionPlus {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 50%;
+    border: 1px solid gray;
+    color: gray;
+    cursor: pointer;
+}
+.searchCounterOptionLess {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 26px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 50%;
+    border: 1px solid gray;
+    color: gray;
+    cursor: pointer;
+}
+.searchCounterOptionPlus:hover, 
+.searchCounterOptionLess:hover {
+    color:#3a3a3a;
+     border: 1px solid #3a3a3a;
+}
+.searchSubmit {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    background-color: #2760de;
+    padding: 4px;
+    cursor: pointer;
+}
+.searchSubmit:hover {
+    background-color: #4974d4;
+}
+.submitHidden {
+    display: none;
+}
+.modalGuests {
+    position: absolute;
+    padding: 10px 30px;
+    background-color: #FFFFFF;
+    top: 150%;
+    width: 300px;
+    left: -80px;
+    border-radius: 50px;
+    align-items: center;
+    justify-content: center;
+}
+.modalGuests.show {
+    display: flex;
+}
+.modalGuests.hide {
+    display: none;
+}
+.modalGuests .option {
+    width: 100%;
+    border-radius: 50px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border-bottom: 1px solid gray;
+}
+.modalGuests .option:last-child {
+    border-bottom: unset;
+}
+.modalGuests .option div:nth-child(1) {
+    width: 60%;
+}
+.modalGuests .option div:nth-child(2) {
+    width: 40%;
+}
+.modalGuests .option div .title {
+    color: black;
+    font-weight: bold;
+    width: 100%;
+}
+.modalGuests .option div .subtitle {
+    color: black;
+    opacity: 0.8;
+    font-size: 13px;
+    width: 100%;
+}

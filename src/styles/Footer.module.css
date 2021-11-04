@@ -1,0 +1,19 @@
+.footerContainer {
+	background-color: #F7F7F7;
+    border-top: 1px solid #bdbdbd;
+    padding-top: 30px;
+    display: flex;
+    width: 100%;
+}
+.horizontalContainerFooter {
+	width: 100%;
+    display: flex;
+    flex-flow: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+}
+.horizontalContainerFooter:nth-child(2) {
+	border-top: 1px solid #828290;
+    margin-top: 10px;
+    padding: 10px 0px;
+}

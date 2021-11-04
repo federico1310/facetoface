@@ -1,0 +1,69 @@
+.profileDisplayMain {
+	width: 60%;
+    margin: 160px auto 0px auto;
+    display: flex;
+    flex-flow: row;
+}
+.titleContainer {
+	width: 100%;
+    display: flex;
+    flex-flow: column;
+    margin-top: 30px;
+    padding-left: 70px;
+}
+.profileTitle {
+    font-weight: bold;
+    font-size: 28px;
+    padding-bottom: 4px;
+}
+.registeredAtTitle {
+    color: #9d9d9d;
+    margin-bottom: 20px;
+}
+.editProfileLink {
+    color: #000000;
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 13px;
+    cursor: pointer;
+}
+.profileCardContainer {
+    display: flex;
+    flex-flow: column;
+    width: 30%;
+    min-width: 300px;
+    padding: 10px;
+}
+.profileCard {
+    border-radius: 10px;
+    box-shadow: 0px 1px 5px 1px rgb(0 0 0 / 20%);
+    padding: 20px;
+}
+.profileTop {
+    margin: 20px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.profileImageContainer {
+    width: 100px;
+    height: 100px;
+}
+.profileImage {
+    border-radius: 50%;
+}
+.verifiedData {
+    font-weight: bold;
+    font-size: 17px;
+}
+.verifiedDataLine {
+    display: flex;
+    flex-flow: row;
+    margin: 10px;
+}
+.verifiedDataIcon {
+    width: 20px;
+}
+.verifiedDataTitle {
+
+}

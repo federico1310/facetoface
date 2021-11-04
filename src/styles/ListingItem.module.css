@@ -1,0 +1,48 @@
+.anuncio {
+	width: 25%;
+}
+.estado {
+	width: 15%;
+}
+.dormitorios {
+	width: 10%;
+}
+.camas {
+	width: 10%;
+}
+.banios {
+	width: 10%;
+}
+.ubicacion {
+	width: 15%;
+}
+.modificado {
+	width: 15%;
+}
+.listingBody {
+	width: 100%;
+    display: flex;
+    flex-flow: row;
+}
+.listingBodyItem {
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+}
+.listingBodyItemRow {
+    display: flex;
+    color: #6e717e;
+    padding: 20px 0px;
+    border-bottom: 1px solid #b5b3c9;
+    align-items: center;
+}
+.listingBodyItemRowImageContainer {
+	width: 90px;
+    margin: 0px 20px;
+}
+.listingBodyItemRowImage {
+	border-radius: 6px;
+}
+.listingBodyItemRowImageDescription {
+	font-weight: bold;
+}

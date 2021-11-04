@@ -1,0 +1,199 @@
+@font-face {
+  font-family: 'Nunito Sans', monospace;
+  src: url(fonts/Nunito_Sans/NunitoSans-Regular.ttf) format('truetype');
+}
+
+html,
+body {
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+    font-size: 14px;
+    line-height: 1.43;
+    color: #484848;
+    background-color: #fff;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+div {
+	width: 100%;
+}
+.mainPropertyDisplay .MuiPickersToolbar-toolbar {
+	display: none !important;
+}
+.ReactGridGallery_tile-viewport {
+	background-color: #c5c5c5;
+}
+.ReactGridGallery_tile-viewport img { 
+	margin-left: unset !important; 
+}
+#lightboxBackdrop div {
+	width: unset;
+}
+.closeModal {
+	position: absolute;
+    top: 10px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    left: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #000000;
+    cursor: pointer;
+}
+.closeModal:hover {
+	background-color: rgba(0,0,0,0.1);
+}
+.dateSelector .MuiInput-underline:before {
+    border: none;
+}
+/* Scrollbars */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+::-webkit-scrollbar-thumb {
+	background-color: #2760de;
+    border-radius: 10px;
+}
+
+
+/* Common width list*/
+.w100 {
+	width: 100%;
+}
+.w90 {
+	width: 90%;
+}
+.w80 {
+	width: 80%;
+}
+.w70 {
+	width: 70%;
+}
+.w60 {
+	width: 60%;
+}
+.w50 {
+	width: 50%;
+}
+.w40 {
+	width: 40%;
+}
+.w30 {
+	width: 30%;
+}
+.w20 {
+	width: 20%;
+}
+.w10 {
+	width: 10%;
+}
+/* */
+.positionRelative {
+	position: relative;
+}
+.flexFlowColumn {
+	flex-flow: column;
+}
+/* Slider styles */
+.react-slideshow-container {
+	position: relative;
+}
+.react-slideshow-container .default-nav svg {
+	width: 14px
+}
+.react-slideshow-container+ul.indicators .each-slideshow-indicator:before {
+	background: #fff !important;
+}
+/* Common height list*/
+.h100 {
+	height: 100%;
+}
+.h90 {
+	height: 90%;
+}
+.h80 {
+	height: 80%;
+}
+.h70 {
+	height: 70%;
+}
+.h60 {
+	height: 60%;
+}
+.h50 {
+	height: 50%;
+}
+.h40 {
+	height: 40%;
+}
+.h30 {
+	height: 30%;
+}
+.h20 {
+	height: 20%;
+}
+.h10 {
+	height: 10%;
+}
+/**/
+.blockHorizontalCenter {
+	margin: 0 auto;
+}
+.tituloPage {
+	color: #d64a36;
+}
+.buttonGral {
+	background-color: rgb(214, 74, 54);
+}
+.modal {
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	transition: all 0.3s ease-in-out;
+	pointer-events: none;
+}
+.modal.show {
+	opacity: 1;
+	pointer-events: visible;
+}
+.modal-content {
+	width: 500px;
+	background-color: #fff;
+	border-radius: 3px;
+}
+
+.modal-header, .modal-footer {
+	padding: 10px;
+}
+
+.modal-title {
+	margin: 0;
+}
+.modal-body {
+	padding: 10px;
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+}
+input:focus, textarea:focus, select:focus{
+    outline: none;
+}

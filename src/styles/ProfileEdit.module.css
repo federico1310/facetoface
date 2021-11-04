@@ -1,0 +1,103 @@
+.profileEditDisplayMain {
+	width: 60%;
+    margin: 90px auto 0px auto;
+    display: flex;
+    flex-flow: column;
+}
+.navigationDisplayContainer {
+	display: flex;
+	align-items: center;
+}
+.navigationDisplaySeparator {
+	display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 0px 5px;
+}
+.navigationDisplayDescription {
+	display: inline-block;
+    width: auto;
+    font-weight: bold;
+    font-size: 13px;
+    vertical-align: middle;
+}
+.profileEditTitle {
+	margin-top: 20px;
+    font-weight: bold;
+    font-size: 28px;
+}
+.profileEditFormContainer {
+	display: flex;
+    flex-flow: column;
+}
+.profileEditForm {
+	display: flex;
+    flex-flow: column;
+    margin-top: 50px;
+}
+.profileEditFormLine {
+	display: flex;
+    flex-flow: row;
+}
+.profileEditFormLine:last-child {
+    align-items: center;
+    justify-content: flex-end;
+}
+.profileEditFormLineInformation {
+    display: flex;
+    flex-flow: column;
+    width: calc(100% - 40px);
+}
+.profileEditLineLabel {
+    display: flex;
+    flex-flow: column;
+    font-weight: bold;
+}
+.profileEditLineContent {
+    display: flex;
+    flex-flow: column;
+    margin-top: 5px;
+}
+.inputsSearch {
+    background-color: #eeefff;
+    margin-top: 5px;
+    padding: 8px;
+}
+.profileEditFormLineAction {
+	display: flex;
+    justify-content: flex-end;
+    width: 40px;
+}
+.closeEdit {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    margin: 30px 10px 0px 10px;
+    cursor: pointer;
+}
+.enableEdit {
+	color: #0f7ecd;
+    font-weight: bold;
+    cursor: pointer;
+    width: auto;
+}
+.show {
+	display: flex;
+}
+.hide { 
+	display: none;
+}
+.profileEditFormLineSeparator {
+	height: 1px;
+    width: 100%;
+    margin: 20px 0px;
+    background-color: #9092b1;
+}
+.inputSubmit {
+    margin: 20px 0px 15px 0px;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #2760de;
+    color: #ffffff;
+}

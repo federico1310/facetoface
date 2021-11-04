@@ -1,0 +1,146 @@
+.sectionContainer {
+	padding-top: 80px;
+	flex-flow: wrap;
+	position: relative;
+}
+.halfScreenPropertiesList {
+	display: flex;
+	flex-flow: column;
+	justify-content: flex-start;
+	padding-top: 20px;
+}
+.halfScreenPropertiesList {
+	width: 45%;
+	min-height: 100vh;
+}
+.propertiesListMapContainer {
+	width: 55%;
+    height: calc(100vh - 80px);
+    position: sticky;
+    top: 80px;
+    right: 0px;
+}
+.propertiesListMapContainer div {
+    width: unset;
+}
+.propertiesFiltersContainer {
+	width: 90%;
+    margin: 0 auto;
+}
+.propertiesFiltersContainer .subTitle {
+
+}
+.propertiesFiltersContainer .title {
+	font-size: 28px;
+    color: #333440;
+}
+.propertiesFiltersContainer .propertiesCardContainer {
+	width: 100%;
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+	padding: 10px 0px;
+}
+.propertiesFiltersContainer .propertyCard {
+	width: 100%;
+    height: 250px;
+    border-bottom: 1px solid #b3b3b3;
+    border-top: 1px solid #b3b3b3;
+    padding: 25px 0px;
+    display: flex;
+    box-sizing: border-box;
+}
+.propertiesCardContainer .propertyCardHalf {
+	display: flex;
+	height: 100%;
+	flex-flow: column;
+	justify-content: center;
+	align-items: center;
+}
+.propertiesCardContainer .propertyCardHalf:nth-child(1) {
+	width: 40%;
+}
+.propertiesCardContainer .propertyCardHalf:nth-child(2) {
+	width: 60%;
+	padding: 0px 10px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    position: relative;
+}
+.propertiesCardContainer .propertyCardHalf .sliderWrapper {
+	height: 200px;
+}
+.propertiesCardContainer .propertyCardHalf div[aria-roledescription=carousel] {
+  position: relative;
+}
+.propertiesCardContainer .propertyCardHalf div[aria-roledescription=carousel] ul {
+	position: absolute;
+	bottom: 5px;
+	margin-top: unset;
+	left: 50%;
+}
+.propertiesCardContainer .propertyCardHalf .sliderWrapper .slide {
+	height: 200px;
+	display: flex;
+}
+.propertiesCardContainer .propertyCardHalf .propertyCardImage {
+	border-radius: 10px;
+}
+.propertiesCardContainer .propertyCardHalf {
+
+}
+.propertiesCardContainer .propertyCardHalf .realCardPropertyName {
+	display: flex;
+    font-size: 15px;
+}
+.propertiesCardContainer .propertyCardHalf .fakeCardPropertyName {
+	font-size: 16px;
+    color: #000000;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.propertiesCardContainer .propertyCardHalf .splitLineCardProperty {
+	width: 30px;
+    height: 1px;
+    margin: 10px 0px;
+    background-color: #a6a4ad;
+}
+.propertiesCardContainer .propertyCardHalf .amenitiesContainerCardProperty {
+	width: 100%;
+    display: flex;
+    flex-flow: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+.propertiesCardContainer .propertyCardHalf .amenitiesOptionCardProperty {
+	font-size: 13px;
+    flex-grow: 2;
+    text-align: center;
+}
+.propertiesCardContainer .propertyCardHalf .amenitiesSeparatorCardProperty {
+	flex-grow: 1;
+    width: 20px;
+    margin: 0px 5px;
+    text-align: center;
+}
+.propertiesCardContainer .propertyCardHalf .priceContainerCardProperty {
+	position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-flow: row;
+    width: 120px;
+    align-items: center;
+    justify-content: flex-start;
+}
+.propertiesCardContainer .propertyCardHalf .priceCardProperty {
+	text-align: right;
+    color: #000000;
+    font-weight: bold;
+    font-size: 20px;
+}
+.propertiesCardContainer .propertyCardHalf .pricePerCardProperty {
+	font-size: 16px;
+}

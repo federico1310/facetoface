@@ -1,0 +1,122 @@
+.nearPlacesSectionContainer {
+	padding: 20px 0px;
+}
+.title {
+	font-weight: bold;
+    font-size: 20px;
+}
+.nearPlacesCardsContainer {
+	width: 100%;
+	display: flex;
+	justify-content: flex-start;
+    align-items: center;
+    flex-flow: wrap;
+}
+.nearPlacesCard {
+	display: flex;
+	width: 24%;
+	align-items: center;
+	justify-content: flex-start;
+	margin: 10px 4px;
+	min-width: 200px;
+}
+.nearPlacesCardImageContainer {
+	display: flex;
+	width: 72px;
+	height: 72px;
+	position: relative;
+}
+.nearPlacesCardTextContainer {
+	display: flex;
+	width: 118px;
+	justify-content: flex-start;
+	flex-flow: column;
+	align-items: center;
+	margin-left: 10px;
+}
+.nearPlacesCardPlace {
+	display: flex;
+	justify-content: flex-start;
+	font-weight: bold;
+}
+.nearPlacesCardDistance {
+	display: flex;
+	justify-content: flex-start;
+}
+.nearPlacesCardImage {
+	border-radius: 10px;
+}
+
+.quickSearchPlaceContainer {
+	width: 100%;
+	display: flex;
+	justify-content: flex-start;
+    align-items: center;
+    flex-flow: wrap;
+}
+.quickSearchCard {
+	display: flex;
+	width: calc(25% - 20px);
+	align-items: center;
+	justify-content: flex-start;
+	margin: 10px;
+	min-width: 200px;
+	flex-flow: column;
+	cursor: pointer;
+}
+.quickSearchImageContainer {
+	width: 100%;
+}
+.quickSearchCardImage {
+	border-radius: 10px;
+}
+.quickSearchCardText {
+	font-weight: bold;
+    font-size: 17px;
+}
+.beHostBannerContainer {
+	width: 100%;
+	height: 482px;
+	position: relative;
+	cursor: pointer;
+	overflow: hidden;
+}
+.beHostImage {
+	border-radius: 30px;
+}
+.beHostTextContainer {
+	position: absolute;
+    z-index: 10;
+    width: 30%;
+    background-color: rgb(3 30 93 / 70%);
+    height: 100%;
+    border-radius: 30px 5px 5px 30px;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+	justify-content: center;
+}
+.beHostTitle {
+	width: 70%;
+    font-size: 44px;
+    color: #FFFFFF;
+    line-height: 40px;
+}
+.beHostSubTitle {
+	width: 70%;
+    margin-top: 10px;
+    color: #FFFFFF;
+}
+.fixBeHostButtonPosition {
+	width: 70%;
+	display: flex;
+	justify-content: flex-start; 
+}
+.beHostButton {
+	width: 140px;
+    background-color: #FFFFFF;
+    padding: 10px 20px;
+    text-align: center;
+    margin-top: 20px;
+    border-radius: 10px;
+}
