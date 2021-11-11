@@ -4,10 +4,11 @@ import Image from 'next/image';
 import moment from 'moment';
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from 'next/router';
-
+import Login from '../components/Login';
 import { DatePicker } from '@material-ui/pickers';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import Modal from 'react-modal';
 
 function useComponentSetVisible(initialIsVisible) {
   const [isComponentVisible, setIsComponentVisible] = useState(
@@ -98,6 +99,22 @@ const Header = () => {
 	const today = new Date();
 	const tomorrow = new Date(today);
 		  tomorrow.setDate(tomorrow.getDate() + 1);
+
+	const [modalIsOpen, setIsOpen] = useState(false);
+	const [formToOpen, setFormToOpen] = useState(false);
+	function openModal(which) {
+		setIsComponentVisible(false)
+		setFormToOpen(which)
+	    setIsOpen(true);
+	}
+
+	function afterOpenModal() {
+	   
+	}
+
+	function closeModal() {
+	    setIsOpen(false);
+	}
 
 	useEffect(function onFirstMount() {
 	    window.onscroll = () => {
@@ -225,6 +242,27 @@ const Header = () => {
         )
     }
 
+    const customStyles = {
+	  overlay: {
+	  	zIndex: 200,
+	  	backgroundColor: 'rgba(0,0,0,0.6)'
+	  },
+	  content: {
+	    top: '50%',
+	    left: '50%',
+	    right: 'auto',
+	    bottom: 'auto',
+	    marginRight: '-50%',
+	    transform: 'translate(-50%, -50%)',
+	    width: '40%',
+	    padding: '20px',
+	    borderRadius: '4px'
+	  },
+	};
+
+    if(pathname === "/nuevo-anuncio")
+    	return null;
+
 	return(
 		<header className={`${headerStyle} ${pathname !== "/" ? styles.insideSection : ""}`}>
 			<div className={styles.topHeaderContainer}>
@@ -270,12 +308,12 @@ const Header = () => {
 						</div>
 						<div className={`${styles.modalAccountMenu} ${isComponentVisible ? styles.show  : styles.hide}`}>
 							<div className={styles.linkMenuAccount}>
-								<div className={styles.textMenuAccount}>
+								<div className={styles.textMenuAccount} onClick={() => {openModal('registro')}}>
 									Registrate
 								</div>
 							</div>
 							<div className={styles.linkMenuAccount}>
-								<div className={styles.textMenuAccount}>
+								<div className={styles.textMenuAccount} onClick={() => {openModal('login')}}>
 									Iniciar sesión
 								</div>
 							</div>
@@ -389,6 +427,9 @@ const Header = () => {
 					
 				</div>
 			</div>
+			<Modal isOpen={modalIsOpen} style={customStyles} onRequestClose={closeModal} contentLabel="Example Modal">
+		        <Login form={formToOpen} />
+		    </Modal>
 		</header>
 	);
 }

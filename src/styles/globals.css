@@ -54,7 +54,7 @@ div {
 .closeModal:hover {
 	background-color: rgba(0,0,0,0.1);
 }
-.dateSelector .MuiInput-underline:before {
+.dateSelector .MuiInput-underline:before,  .loginSetter .MuiInput-underline:before {
     border: none;
 }
 /* Scrollbars */

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
 import styles from '../styles/Listing.module.css';
 import { render } from 'react-dom';
+import Link from 'next/link';
 import Gallery from 'react-grid-gallery';
 import Image from 'next/image';
 import Anuncio from '../components/Anuncio';
@@ -150,7 +151,11 @@ const Anuncios = () => {
       <Layout>
         <div className="min-h-screen flex positionRelative bg-white">
           <div className={styles.listingMain}>
-            <div className={styles.listingCreate}>+ Crear anuncio</div> 
+            <div className={styles.listingCreate}>
+              <Link href="/nuevo-anuncio">
+                <a>+ Crear anuncio</a>
+              </Link>
+            </div> 
             <div className={styles.totalListingLength}>{listing_example.length} {listing_example.length == 1 ? 'anuncio' : 'anuncios'}</div>
             <div className={styles.listingTable}>
               <div className={styles.listingHeader}>
