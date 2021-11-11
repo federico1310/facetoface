@@ -8,8 +8,11 @@ import { useRouter } from 'next/router';
 
 const Footer = () => {
 
-	const router = useRouter();
+	const { pathname, query, isReady, push } = useRouter();
 
+	if(pathname === "/nuevo-anuncio")
+    	return null;
+	
 	return(
 		<footer className={styles.footerContainer}>
 			<div className={`h100 w80 blockHorizontalCenter flex flexFlowColumn`}>

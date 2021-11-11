@@ -1,0 +1,136 @@
+.labelCheckboxPublication {
+    width: 300px;
+    box-sizing: border-box; 
+    padding: 20px 30px;
+    margin-top: 15px;
+    border: 1px solid #ababab;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #fbfbfb;
+}
+.labelCheckboxPublication:hover, .isSelected {
+    border: 1px solid #000000;
+    font-weight: bold;
+}
+.checkboxPublication {
+    display: none;
+}
+.stepContainer {
+    height: calc(100% - 100px);
+    display: flex;
+    flex-flow: column;
+}
+.formContainer {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.stepFooter {
+    flex-flow: column;
+    margin-top: 15px;
+}
+.stepFooterLineBackground {
+    background-color: #cfcfcf;
+    height: 4px;
+}
+.stepFooterLineBackgroundProgress {
+    background-color: #000000;
+    height: 4px;
+}
+.stepFooterButtonsContainer {
+    height: 48px;
+    flex-flow: row;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.stepFooterButtons {
+    display: flex;
+    width: auto;
+    height: auto;
+}
+.stepFooterButtons:nth-child(1){
+    text-decoration: underline;
+    font-weight: bold;
+    color: #000000;
+    cursor: pointer;
+}
+.stepFooterButtons:nth-child(2) {
+    padding: 10px 20px;
+    background-color: #000000;
+    border-radius: 3px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+.disabledButtonBack {
+    color: #d7d7d7 !important;
+}
+.disabledButtonBackNext {
+    background-color: #d7d7d7 !important;
+}
+.inputFieldsContainer {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+}
+.titleInputFieldsContainer {
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.loginSetterTitle {
+    font-size: 12px;
+    font-weight: bold;
+}
+.fullLoginSetterContainer {
+    border: 1px solid #909090;
+    border-radius: 7px;
+    flex-flow: row;
+    margin-top: 10px;
+}
+.loginSetterContainer {
+    display: flex;
+    border-bottom: 1px solid #909090;
+}
+.loginSetterContainer:last-child {
+    border-bottom: unset;
+}
+.loginSetter {
+    display: flex;
+    flex-flow: column;
+    padding: 5px 10px 0px 10px;
+}
+.inputsSearch {
+    padding: 5px 0px;
+    width: 100%;
+    color: black;
+    resize: none;
+}
+.inputsSearch.empty {
+    color: #a2a2a2;
+}
+.inputsSearch.filled {
+    color: black;
+}
+.submitLogin {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #2760de;
+    border-radius: 3px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+.changeFormContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0px;
+}
+.changeFormLink {
+    margin-left: 5px;
+    text-decoration: underline;
+    cursor: pointer;
+}
