@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import Layout from '../components/Layout';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
@@ -8,6 +8,7 @@ import Link from 'next/link';
 import Gallery from 'react-grid-gallery';
 import Image from 'next/image';
 import Anuncio from '../components/Anuncio';
+import UsuarioContext from '../context/usuarios/UsuarioContext';
 import { OBTENER_ANUNCIOS } from '../queries/Anuncios/Anuncios.ts';
 
 const getYear = function(date){
@@ -17,14 +18,39 @@ const getYear = function(date){
 }
 
 const Anuncios = () => {
-  const { query, isReady } = useRouter();
+  const usuarioContext = useContext(UsuarioContext);
+  const { token } = usuarioContext;
+  const { query, isReady, pathname, push } = useRouter();
   const { data, loading, error } = useQuery(OBTENER_ANUNCIOS);
+  const [ totalAnuncios, setTotalAnuncios ] = useState(0)
+
+  useEffect(() => {
+    if(data)
+    {
+      if(data.obtenerAnuncios)
+      {
+        setTotalAnuncios(data?.obtenerAnuncios.length);
+      }
+    }
+  }, [data]);
 
   if(!isReady)
     return null;
   
   
-    if(loading) return 'Cargando...';
+    if(loading) 
+    {
+      return 'Cargando...';
+    }
+    else
+    {
+      let savedToken = localStorage.getItem('token')
+      if(!savedToken)
+      {
+        push({pathname: '/'})
+        return null;
+      }
+    }
 
     return (
       <Layout>
@@ -35,7 +61,7 @@ const Anuncios = () => {
                 <a className={styles.buttonCreatePublication}>+ Crear anuncio</a>
               </Link>
             </div> 
-            <div className={styles.totalListingLength}>{data.obtenerAnuncios.length} {data.obtenerAnuncios.length == 1 ? 'anuncio' : 'anuncios'}</div>
+            <div className={styles.totalListingLength}>{totalAnuncios} {totalAnuncios == 1 ? 'anuncio' : 'anuncios'}</div>
             <div className={styles.listingTable}>
               <div className={styles.listingHeader}>
                 <div className={`${styles.listingHeaderItem} ${styles.anuncio}`}>ANUNCIO</div>
