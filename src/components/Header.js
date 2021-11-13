@@ -127,7 +127,6 @@ const Header = () => {
 	}, []);
 
 	useEffect(() => {
-		console.log(token)
 		if(!token)
 		{
 			modificarToken(localStorage.getItem('token'));

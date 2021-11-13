@@ -47,6 +47,15 @@ const Perfil = () => {
   
     if(loading) 
       return 'Cargando...';
+    else
+    {
+      let savedToken = localStorage.getItem('token')
+      if(!savedToken)
+      {
+        push({pathname: '/'})
+        return null;
+      }
+    }
 
     return (
       <Layout>

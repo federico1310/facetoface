@@ -37,7 +37,7 @@ const NuevoAnuncio = () => {
   const [stepDescription, setStepDescription] = useState(null);
   const [validateStepField, setValidateStepField] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
-  const router = useRouter();
+  const { query, isReady, pathname, push } = useRouter();
   const [data, setData] = useState({
     type_groups: "",
     privacy_types: "",
@@ -61,14 +61,24 @@ const NuevoAnuncio = () => {
   const [dataValidated, setDataValidated] = useState(true);
   const [ nuevoAnuncio ] = useMutation(NUEVO_ANUNCIO, {
     update(cache, {data: { nuevoProducto }}) {
-      const { obtenerAnuncios } = cache.readQuery({ query: OBTENER_ANUNCIOS });
-
-      cache.writeQuery({
-        query: OBTENER_ANUNCIOS,
-        data: {
-          obtenerAnuncios: [...obtenerAnuncios, nuevoAnuncio]
-        }
-      })
+            // Obtener objeto de cache que deseamos actualizar
+            try {
+                 
+                const query = cache.readQuery({ query: OBTENER_ANUNCIOS });
+                if(query)
+                {
+                    const { obtenerAnuncios } = query;
+                    // Reescribimos el cache (el cache nunca se debe modificar)
+                    cache.writeQuery({
+                      query: OBTENER_ANUNCIOS,
+                      data: {
+                        obtenerAnuncios: [...obtenerAnuncios, nuevoAnuncio]
+                      }
+                    })
+                }
+            } catch(error) {
+                console.log(error);
+            }
     }
   });
 
@@ -168,14 +178,22 @@ const NuevoAnuncio = () => {
     <StepFive next={handleNextStep} settings={settings_example} />
   ];
 
-  console.log("data", data);
-
   const mostrarMensaje = () => {
       return(
           <div className="bg-white py-2 px-3 w-full my-3 max-w-sm text-center mx-auto">
               <p>{mensaje}</p>
           </div>
       )
+  }
+
+  if(!isReady)
+    return null;
+
+  let savedToken = localStorage.getItem('token')
+  if(!savedToken)
+  {
+    push({pathname: '/'})
+    return null;
   }
 
   return (
@@ -244,7 +262,7 @@ const NuevoAnuncio = () => {
 
                         setTimeout(() => {
                             guardarMensaje(null);
-                            router.push('/anuncios');
+                            push({pathname: '/anuncios'});
                         }, 3000);
 
                         // Redirecciona usuario al login
