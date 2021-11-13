@@ -1,36 +1,43 @@
 import { useState, useEffect, useRef } from "react";
 import { useFormikContext, Formik, Form, Field, withFormik  } from 'formik';
+import { useRouter } from 'next/router';
 import * as Yup from "yup";
 import Layout from '../components/Layout';
 import styles from '../styles/Publish.module.css';
+import { NUEVO_ANUNCIO, OBTENER_ANUNCIOS } from '../queries/Anuncios/Anuncios.ts';
+import { useMutation, gql} from '@apollo/client';
 
 const NuevoAnuncio = () => {
+
+  // State para el mensaje
+  const [mensaje, guardarMensaje] = useState(null);
   const settings_example = {
     'type_groups': [
-      {'id':1, 'label': 'Departamento'},
-      {'id':2, 'label': 'Casa'},
-      {'id':3, 'label': 'Vivienda anexa'},
-      {'id':4, 'label': 'Alojamiento único'},
-      {'id':5, 'label': 'Bed and breakfast'},
-      {'id':6, 'label': 'Hotel boutique'}
+      {'id':"618f54ba7b99028198da66bd", 'label': 'Departamento'},
+      {'id':"618f54be7b99028198da66be", 'label': 'Casa'},
+      {'id':"618f54c77b99028198da66bf", 'label': 'Vivienda anexa'},
+      {'id':"618f54cd7b99028198da66c0", 'label': 'Alojamiento único'},
+      {'id':"618f54d47b99028198da66c1", 'label': 'Bed and breakfast'},
+      {'id':"618f54db7b99028198da66c2", 'label': 'Hotel boutique'}
     ],
     'types': [
-      {'id':1, 'label': 'Casa residencial'},
-      {'id':2, 'label': 'Cabaña'},
-      {'id':3, 'label': 'Casona'},
-      {'id':4, 'label': 'Vivienda unifamiliar'},
-      {'id':5, 'label': 'Casa rural'}
+      {'id':"618f54727b99028198da66b8", 'label': 'Casa residencial'},
+      {'id':"618f547d7b99028198da66b9", 'label': 'Cabaña'},
+      {'id':"618f54837b99028198da66ba", 'label': 'Casona'},
+      {'id':"618f548a7b99028198da66bb", 'label': 'Vivienda unifamiliar'},
+      {'id':"618f54927b99028198da66bc", 'label': 'Casa rural'}
     ],
     'privacy_types': [
-      {'id':1, 'label': 'Un alojamiento entero'},
-      {'id':2, 'label': 'Una habitación privada'},
-      {'id':3, 'label': 'Una habitación compartida'}
+      {'id':"618f54f57b99028198da66c3", 'label': 'Un alojamiento entero'},
+      {'id':"618f54fc7b99028198da66c4", 'label': 'Una habitación privada'},
+      {'id':"618f55047b99028198da66c5", 'label': 'Una habitación compartida'}
     ]
   } 
   const formRef = useRef();
   const [stepDescription, setStepDescription] = useState(null);
   const [validateStepField, setValidateStepField] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
+  const router = useRouter();
   const [data, setData] = useState({
     type_groups: "",
     privacy_types: "",
@@ -40,7 +47,7 @@ const NuevoAnuncio = () => {
     city: "",
     state: "",
     zip_code: "",
-    country: "Argentina - AR",
+    country: "Argentina",
     guests: 0,
     bedrooms: 0,
     beds: 0,
@@ -52,6 +59,18 @@ const NuevoAnuncio = () => {
     title: ""
   });
   const [dataValidated, setDataValidated] = useState(true);
+  const [ nuevoAnuncio ] = useMutation(NUEVO_ANUNCIO, {
+    update(cache, {data: { nuevoProducto }}) {
+      const { obtenerAnuncios } = cache.readQuery({ query: OBTENER_ANUNCIOS });
+
+      cache.writeQuery({
+        query: OBTENER_ANUNCIOS,
+        data: {
+          obtenerAnuncios: [...obtenerAnuncios, nuevoAnuncio]
+        }
+      })
+    }
+  });
 
   useEffect(() => {
     switch(currentStep)
@@ -151,6 +170,14 @@ const NuevoAnuncio = () => {
 
   console.log("data", data);
 
+  const mostrarMensaje = () => {
+      return(
+          <div className="bg-white py-2 px-3 w-full my-3 max-w-sm text-center mx-auto">
+              <p>{mensaje}</p>
+          </div>
+      )
+  }
+
   return (
     <Layout>
       <div className="min-h-screen flex positionRelative bg-white">
@@ -160,12 +187,13 @@ const NuevoAnuncio = () => {
           </div>
           <div className={styles.newPublicationHalf}>
             <div className={styles.stepContainer}>
+              {mensaje && mostrarMensaje()}
               <Formik
                   innerRef={formRef}
-                  initialValues={{type_groups: '', privacy_types: '', types: '', street: '', dpto: '', city: '', state: '', zip_code: '', country: 'Argentina - AR', guests: 0, bedrooms: 0, beds: 0, offices: 0, toilets: 0, price: 0, per: '', description: '', title: ''}} validationSchema={Yup.object({
-                     type_groups: Yup.number().required(),
-                     types: Yup.number().required(),
-                     privacy_types: Yup.number().required(),
+                  initialValues={{type_groups: '', privacy_types: '', types: '', street: '', dpto: '', city: '', state: '', zip_code: '', country: 'Argentina', guests: 0, bedrooms: 0, beds: 0, offices: 0, toilets: 0, price: 0, per: '', description: '', title: ''}} validationSchema={Yup.object({
+                     type_groups: Yup.string().required("Seleccione grupo"),
+                     types: Yup.string().required("Seleccione tipo"),
+                     privacy_types: Yup.string().required("Seleccione privacidad"),
                      street: Yup.string().required("Por favor ingrese la calle"),
                      dpto: Yup.string(),
                      city: Yup.string().required("Por favor ingrese la ciudad"),
@@ -183,7 +211,51 @@ const NuevoAnuncio = () => {
                      title: Yup.string().required("Por favor ingrese un título para el anuncio"),
                   })}
                   onSubmit={async (valores) => {
-                      //const { place, startDate, endDate, guests} = valores;
+                  
+                    const { type_groups, types, privacy_types, street, dpto, city, state, zip_code, country, guests, bedrooms, beds, offices, toilets, price, per, description, title } = valores;
+                    try {
+                        const { data } = await nuevoAnuncio({
+                            variables: {
+                                input: {
+                                    type_groups,
+                                    types,
+                                    privacy_types,
+                                    street,
+                                    dpto,
+                                    city,
+                                    state,
+                                    zip_code,
+                                    country,
+                                    guests,
+                                    bedrooms,
+                                    beds,
+                                    offices,
+                                    toilets,
+                                    price,
+                                    per,
+                                    description, 
+                                    title
+                                }
+                            }
+                        });
+
+                        // Usuario creado correctamente
+                        guardarMensaje(`Se creo correctamente el Anuncio: ${data.nuevoAnuncio.title} `);
+
+                        setTimeout(() => {
+                            guardarMensaje(null);
+                            router.push('/anuncios');
+                        }, 3000);
+
+                        // Redirecciona usuario al login
+
+                    } catch(error) {
+                        guardarMensaje(error.message.replace('GraphQL error: ',''));
+
+                        setTimeout(() => {
+                            guardarMensaje(null);
+                        }, 3000);
+                    }
                   }}
                >
                   {({ values }) => 

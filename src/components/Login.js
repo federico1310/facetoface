@@ -1,10 +1,13 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { useFormikContext, Formik, Form, Field, withFormik, useFormik  } from 'formik';
 import * as Yup from "yup";
 import styles from '../styles/Login.module.css';
+import { useMutation, gql} from '@apollo/client';
 import { DatePicker } from '@material-ui/pickers';
+import { AUTENTICAR_USUARIO, NUEVA_CUENTA } from '../queries/Usuarios/Usuarios.ts';
+import UsuarioContext from '../context/usuarios/UsuarioContext';
 
-const ModalLoginRegister = ({form}) => {
+const ModalLoginRegister = ({form, setIsOpen}) => {
 
 	/* ---------------- States registro -------------------- */
 		const formRef = useRef();
@@ -20,14 +23,17 @@ const ModalLoginRegister = ({form}) => {
 		    last_name: ""
 		});
 		const [dataValidated, setDataValidated] = useState(true);
-		
+		const [ nuevoUsuario ] = useMutation(NUEVA_CUENTA);
 		const today = new Date();
 		var eighteenYearsAgo = new Date();
 			eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
+		const usuarioContext = useContext(UsuarioContext);
+    	const { modificarToken } = usuarioContext;
 	/* ------------------------------------------------------ */
 	/* ----------------- States generales ------------------- */
 		const [ mensaje, guardarMensaje ] = useState(null);
 		const [ whichForm, setWhichForm ] = useState(form);
+		const [ autenticarUsuario ] = useMutation(AUTENTICAR_USUARIO);
 	/* ------------------------------------------------------ */
 
 	/* -------------------------------- Funciones login -------------------------- */
@@ -41,7 +47,7 @@ const ModalLoginRegister = ({form}) => {
 		        password: Yup.string().required('El password es obligatorio')
 		    }),
 		    onSubmit: async valores => {
-		        /*const { email, password } = valores;
+		        const { email, password } = valores;
 
 		        try {
 		            const { data } = await autenticarUsuario({
@@ -53,18 +59,17 @@ const ModalLoginRegister = ({form}) => {
 		                }
 		            }) 
 
-		            console.log(data);
 		            guardarMensaje('Autenticando...');
 
 		            // Guardar el token en localstorage
 		            const { token } = data.autenticarUsuario;
-		            localStorage.setItem('token', token); 
+		            localStorage.setItem('token', token);
+		            
+		            modificarToken(token)
 
 		            // Redireccionar hacia clientes
-		            setTimeout(() => {
-		                guardarMensaje(null);
-		                router.push('/');
-		            }, 2000);
+	                guardarMensaje(null);
+	                setIsOpen(false)
 
 		        } catch(error) {
 		            guardarMensaje(error.message.replace('GraphQL error: ',''));
@@ -72,7 +77,7 @@ const ModalLoginRegister = ({form}) => {
 		            setTimeout(() => {
 		                guardarMensaje(null);
 		            }, 3000);
-		        }*/
+		        }
 		    }
 		})
 
@@ -201,7 +206,7 @@ const ModalLoginRegister = ({form}) => {
 			          	</div>
 			        </div>
 			        <div className={styles.changeFormContainer}>Si aún no estas registrado hace <strong className={styles.changeFormLink} onClick={() => {setWhichForm('registro')}}>click aquí</strong></div>
-	                <input type="submit" className={styles.submitLogin} value="Iniciar Sesión" />
+	                <input type="submit" className={styles.submitLogin} value="Iniciar Sesión"></input>
 	            </form>
 	        </div>
 
@@ -229,7 +234,49 @@ const ModalLoginRegister = ({form}) => {
 	                    birthday: Yup.date().max(eighteenYearsAgo, "Debe ser mayor de 18 años").required('Por favor ingrese su fecha de nacimiento'),
 	                  })}
 	                  onSubmit={async (valores) => {
-	                      //const { place, startDate, endDate, guests} = valores;
+	                      	const {email, password, name, last_name, gender, birthday} = valores;
+
+	                      	let firstDate = '';
+	                      	if (typeof birthday.format === "function") { 
+							    firstDate = birthday.toISOString();;
+							}
+							else
+							{
+								firstDate = moment(birthday).toISOString();;
+							}
+
+				            try {
+				                const { data } = await nuevoUsuario({
+				                    variables: {
+				                        input: {
+				                            name,
+				                            last_name,
+				                            email,
+				                            password,
+				                            gender,
+				                            birthday: firstDate
+				                        }
+				                    }
+				                });
+
+				                // Usuario creado correctamente
+				                guardarMensaje(`Se creo correctamente el Usuario: ${data.nuevoUsuario.name} `);
+
+				                setTimeout(() => {
+				                    guardarMensaje(null);
+				                    setCurrentStep(0);
+				                    setWhichForm('login');
+				                }, 3000);
+
+				                // Redirecciona usuario al login
+
+				            } catch(error) {
+				                guardarMensaje(error.message.replace('GraphQL error: ',''));
+
+				                setTimeout(() => {
+				                    guardarMensaje(null);
+				                }, 3000);
+				            }
 	                  }}
 	               >
 	                  {({ values }) => 
@@ -355,7 +402,7 @@ const StepTwo = () => {
 		              <label className={styles.loginSetterTitle} htmlFor="last_name">Elija su género</label>
 		              <div className="radio">
 				          <label>
-				            <input type="radio" value="masculino" checked={values.gender === "Male"} onChange={(ev) => setFieldValue("gender", 'masculino')} /> Masculino 
+				            <input type="radio" value="masculino" checked={values.gender === "masculino"} onChange={(ev) => setFieldValue("gender", 'masculino')} /> Masculino 
 				          </label>
 				        </div>
 				        <div className="radio">

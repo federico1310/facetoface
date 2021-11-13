@@ -45,6 +45,20 @@
     font-weight: bold;
     color: #6e717e;
 }
+.buttonCreatePublication {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.noPublicationsError {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
 .anuncio {
 	width: 25%;
 }
