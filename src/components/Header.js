@@ -2,13 +2,14 @@ import styles from '../styles/Header.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
 import moment from 'moment';
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { useRouter } from 'next/router';
 import Login from '../components/Login';
 import { DatePicker } from '@material-ui/pickers';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Modal from 'react-modal';
+import UsuarioContext from '../context/usuarios/UsuarioContext';
 
 function useComponentSetVisible(initialIsVisible) {
   const [isComponentVisible, setIsComponentVisible] = useState(
@@ -116,12 +117,22 @@ const Header = () => {
 	    setIsOpen(false);
 	}
 
+	const usuarioContext = useContext(UsuarioContext);
+    const { token, modificarToken } = usuarioContext;
+
 	useEffect(function onFirstMount() {
 	    window.onscroll = () => {
 	      setOffset(window.pageYOffset)
 	    }
 	}, []);
 
+	useEffect(() => {
+		console.log(token)
+		if(!token)
+		{
+			modificarToken(localStorage.getItem('token'));
+		}
+	}, [token]);
 	
 	useEffect(() => {
 		if(typeof query != 'undefined' && Object.keys(query).length > 0)
@@ -307,31 +318,38 @@ const Header = () => {
 							</div>
 						</div>
 						<div className={`${styles.modalAccountMenu} ${isComponentVisible ? styles.show  : styles.hide}`}>
-							<div className={styles.linkMenuAccount}>
-								<div className={styles.textMenuAccount} onClick={() => {openModal('registro')}}>
-									Registrate
-								</div>
-							</div>
-							<div className={styles.linkMenuAccount}>
-								<div className={styles.textMenuAccount} onClick={() => {openModal('login')}}>
-									Iniciar sesión
-								</div>
-							</div>
-							<div className={styles.linkMenuAccount}>
-								<Link href="/perfil">
-								  <a className={styles.textMenuAccount}>Cuenta</a>
-								</Link>
-							</div>
-							<div className={styles.linkMenuAccount}>
-								<Link href="/anuncios">
-								  <a className={styles.textMenuAccount}>Administrar anuncios</a>
-								</Link>
-							</div>
-							<div className={styles.linkMenuAccount}>
-								<div className={styles.textMenuAccount}>
-									Convertite en anfitrión
-								</div>
-							</div>
+							{!token ? (
+								<>
+									<div className={styles.linkMenuAccount}>
+										<div className={styles.textMenuAccount} onClick={() => {openModal('registro')}}>
+											Registrate
+										</div>
+									</div>
+									<div className={styles.linkMenuAccount}>
+										<div className={styles.textMenuAccount} onClick={() => {openModal('login')}}>
+											Iniciar sesión
+										</div>
+									</div>
+									<div className={styles.linkMenuAccount}>
+										<div className={styles.textMenuAccount}>
+											Convertite en anfitrión
+										</div>
+									</div>
+								</>
+							) : (
+								<>
+									<div className={styles.linkMenuAccount}>
+										<Link href="/perfil">
+										  <a className={styles.textMenuAccount}>Cuenta</a>
+										</Link>
+									</div>
+									<div className={styles.linkMenuAccount}>
+										<Link href="/anuncios">
+										  <a className={styles.textMenuAccount}>Administrar anuncios</a>
+										</Link>
+									</div>
+								</>
+							)}
 							<div className={styles.linkMenuAccount}>
 								<div className={styles.textMenuAccount}>
 									Ayuda
@@ -428,7 +446,7 @@ const Header = () => {
 				</div>
 			</div>
 			<Modal isOpen={modalIsOpen} style={customStyles} onRequestClose={closeModal} contentLabel="Example Modal">
-		        <Login form={formToOpen} />
+		        <Login form={formToOpen} setIsOpen={setIsOpen} />
 		    </Modal>
 		</header>
 	);

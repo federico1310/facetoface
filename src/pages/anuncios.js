@@ -8,7 +8,7 @@ import Link from 'next/link';
 import Gallery from 'react-grid-gallery';
 import Image from 'next/image';
 import Anuncio from '../components/Anuncio';
-// import { OBTENER_PROPIEDADES } from '../queries/Propiedades/Propiedades.ts';
+import { OBTENER_ANUNCIOS } from '../queries/Anuncios/Anuncios.ts';
 
 const getYear = function(date){
   let jsDate = new Date(date);
@@ -17,135 +17,14 @@ const getYear = function(date){
 }
 
 const Anuncios = () => {
-  const [isNameEditable,setIsNameEditable] = useState(false);
-  const listing_example = [{
-      'id':1,
-      'title':'Anuncio de prueba',
-      'status':'En proceso',
-      'status_id':1,
-      'rooms': 3,
-      'beds': 4,
-      'toilet':2,
-      'image':'/assets/properties/property_1.jpg',
-      'location': 'Buenos Aires, Argentina',
-      'modified_at':'2020/06/13'
-    },
-    {
-      'id':2,
-      'title':'Anuncio de prueba',
-      'status':'En proceso',
-      'status_id':1,
-      'rooms': 3,
-      'beds': 4,
-      'toilet':2,
-      'image':'/assets/properties/property_1.jpg',
-      'location': 'Buenos Aires, Argentina',
-      'modified_at':'2020/06/13'
-    },
-    {
-      'id':3,
-      'title':'Anuncio de prueba',
-      'status':'En proceso',
-      'status_id':1,
-      'rooms': 3,
-      'beds': 4,
-      'toilet':2,
-      'image':'/assets/properties/property_1.jpg',
-      'location': 'Buenos Aires, Argentina',
-      'modified_at':'2020/06/13'
-    },
-    {
-      'id':4,
-      'title':'Anuncio de prueba',
-      'status':'En proceso',
-      'status_id':1,
-      'rooms': 3,
-      'beds': 4,
-      'toilet':2,
-      'image':'/assets/properties/property_1.jpg',
-      'location': 'Buenos Aires, Argentina',
-      'modified_at':'2020/06/13'
-    },
-    {
-      'id':5,
-      'title':'Anuncio de prueba',
-      'status':'En proceso',
-      'status_id':1,
-      'rooms': 3,
-      'beds': 4,
-      'toilet':2,
-      'image':'/assets/properties/property_1.jpg',
-      'location': 'Buenos Aires, Argentina',
-      'modified_at':'2020/06/13'
-    },
-    {
-      'id':6,
-      'title':'Anuncio de prueba',
-      'status':'En proceso',
-      'status_id':1,
-      'rooms': 3,
-      'beds': 4,
-      'toilet':2,
-      'image':'/assets/properties/property_1.jpg',
-      'location': 'Buenos Aires, Argentina',
-      'modified_at':'2020/06/13'
-    },
-    {
-      'id':7,
-      'title':'Anuncio de prueba',
-      'status':'En proceso',
-      'status_id':1,
-      'rooms': 3,
-      'beds': 4,
-      'toilet':2,
-      'image':'/assets/properties/property_1.jpg',
-      'location': 'Buenos Aires, Argentina',
-      'modified_at':'2020/06/13'
-    },
-    {
-      'id':8,
-      'title':'Anuncio de prueba',
-      'status':'En proceso',
-      'status_id':1,
-      'rooms': 3,
-      'beds': 4,
-      'toilet':2,
-      'image':'/assets/properties/property_1.jpg',
-      'location': 'Buenos Aires, Argentina',
-      'modified_at':'2020/06/13'
-    },
-    {
-      'id':9,
-      'title':'Anuncio de prueba',
-      'status':'En proceso',
-      'status_id':1,
-      'rooms': 3,
-      'beds': 4,
-      'toilet':2,
-      'image':'/assets/properties/property_1.jpg',
-      'location': 'Buenos Aires, Argentina',
-      'modified_at':'2020/06/13'
-    },
-    {
-      'id':10,
-      'title':'Anuncio de prueba',
-      'status':'En proceso',
-      'status_id':1,
-      'rooms': 3,
-      'beds': 4,
-      'toilet':2,
-      'image':'/assets/properties/property_1.jpg',
-      'location': 'Buenos Aires, Argentina',
-      'modified_at':'2020/06/13'
-    }];
   const { query, isReady } = useRouter();
+  const { data, loading, error } = useQuery(OBTENER_ANUNCIOS);
 
   if(!isReady)
     return null;
   
-  // const { data, loading, error } = useQuery(OBTENER_PROPIEDADES);
   
-    // if(loading) return 'Cargando...';
+    if(loading) return 'Cargando...';
 
     return (
       <Layout>
@@ -153,10 +32,10 @@ const Anuncios = () => {
           <div className={styles.listingMain}>
             <div className={styles.listingCreate}>
               <Link href="/nuevo-anuncio">
-                <a>+ Crear anuncio</a>
+                <a className={styles.buttonCreatePublication}>+ Crear anuncio</a>
               </Link>
             </div> 
-            <div className={styles.totalListingLength}>{listing_example.length} {listing_example.length == 1 ? 'anuncio' : 'anuncios'}</div>
+            <div className={styles.totalListingLength}>{data.obtenerAnuncios.length} {data.obtenerAnuncios.length == 1 ? 'anuncio' : 'anuncios'}</div>
             <div className={styles.listingTable}>
               <div className={styles.listingHeader}>
                 <div className={`${styles.listingHeaderItem} ${styles.anuncio}`}>ANUNCIO</div>
@@ -168,12 +47,18 @@ const Anuncios = () => {
                 <div className={`${styles.listingHeaderItem} ${styles.modificado}`}>MODIFICADO POR ÚLTIMA VEZ</div>
               </div>
               <div className={styles.listingBody}>
-                {listing_example.map( anuncio => (
-                  <Anuncio 
-                    key={anuncio.id}
-                    anuncio={anuncio}
-                  />
-                ))}
+                {data.obtenerAnuncios.length > 0 ? (
+                  <>
+                    {data.obtenerAnuncios.map( anuncio => (
+                      <Anuncio 
+                        key={anuncio.id}
+                        anuncio={anuncio}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <div className={styles.noPublicationsError}>Aun no ha creado anuncios</div>
+                )}  
               </div>
             </div>
           </div>
