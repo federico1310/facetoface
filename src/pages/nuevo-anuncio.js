@@ -6,6 +6,10 @@ import Layout from '../components/Layout';
 import styles from '../styles/Publish.module.css';
 import { NUEVO_ANUNCIO, OBTENER_ANUNCIOS } from '../queries/Anuncios/Anuncios.ts';
 import { useMutation, gql} from '@apollo/client';
+import Image from 'next/image';
+import Modal from 'react-modal';
+import Login from '../components/Login';
+import Link from 'next/link';
 
 const NuevoAnuncio = () => {
 
@@ -81,6 +85,40 @@ const NuevoAnuncio = () => {
             }
     }
   });
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [formToOpen, setFormToOpen] = useState(false);
+  function openModal(which) {
+    setFormToOpen(which)
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+     
+  }
+
+  function closeModal() {
+      setIsOpen(false);
+  }
+
+  const customStyles = {
+    overlay: {
+      zIndex: 200,
+      backgroundColor: 'rgba(0,0,0,0.6)'
+    },
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      width: '40%',
+      padding: '20px',
+      borderRadius: '4px'
+    },
+  };
+
 
   useEffect(() => {
     switch(currentStep)
@@ -189,111 +227,144 @@ const NuevoAnuncio = () => {
   if(!isReady)
     return null;
 
-  let savedToken = localStorage.getItem('token')
-  if(!savedToken)
-  {
-    push({pathname: '/'})
-    return null;
-  }
+  let savedToken = localStorage.getItem('token');
 
   return (
     <Layout>
       <div className="min-h-screen flex positionRelative bg-white">
         <div className={styles.newPublicationMain}>
           <div className={styles.newPublicationHalf}>
-            <div className={styles.newPublicationDescriptionContainer}>{stepDescription}</div>
+            {savedToken ? (
+              <>
+                <div className={styles.newPublicationDescriptionContainer}>{stepDescription}</div>
+              </>
+            ) : (
+              <>
+                <div className="h100 w100 positionRelative">
+                  <div className={styles.logo}>
+                    <Link href="/">
+                      <a className={styles.logoContainer}>
+                        <Image src="/assets/logo.png" height={160} width={240} layout="intrinsic" />
+                      </a>
+                    </Link>
+                  </div>
+                  <div className={styles.hostImageCover}></div>
+                  <Image src="/assets/be_host.jpg" layout="fill" />
+                </div>
+              </>
+            )}
           </div>
           <div className={styles.newPublicationHalf}>
-            <div className={styles.stepContainer}>
-              {mensaje && mostrarMensaje()}
-              <Formik
-                  innerRef={formRef}
-                  initialValues={{type_groups: '', privacy_types: '', types: '', street: '', dpto: '', city: '', state: '', zip_code: '', country: 'Argentina', guests: 0, bedrooms: 0, beds: 0, offices: 0, toilets: 0, price: 0, per: '', description: '', title: ''}} validationSchema={Yup.object({
-                     type_groups: Yup.string().required("Seleccione grupo"),
-                     types: Yup.string().required("Seleccione tipo"),
-                     privacy_types: Yup.string().required("Seleccione privacidad"),
-                     street: Yup.string().required("Por favor ingrese la calle"),
-                     dpto: Yup.string(),
-                     city: Yup.string().required("Por favor ingrese la ciudad"),
-                     state: Yup.string(),
-                     zip_code: Yup.string(),
-                     country: Yup.string().required("Por favor ingrese el país"),
-                     guests: Yup.number().min(1,"El mínimo de huéspedes es 1").required("Por favor ingrese la cantidad de huéspedes"),
-                     bedrooms: Yup.number().min(1,"El mínimo de habitaciones es 1").required("Por favor ingrese la cantidad de habitaciones"),
-                     beds: Yup.number().min(1,"El mínimo de camas es 1").required("Por favor ingrese la cantidad de camas"),
-                     offices: Yup.number(),
-                     toilets: Yup.number().min(1,"El mínimo de baños es 1").required("Por favor ingrese la cantidad de baños"),
-                     price: Yup.number().required("Por favor ingrese el precio"),
-                     per: Yup.string().required("Por favor seleccione concepto de cobro"),
-                     description: Yup.string().required("Por favor ingrese la descripción"),
-                     title: Yup.string().required("Por favor ingrese un título para el anuncio"),
-                  })}
-                  onSubmit={async (valores) => {
-                  
-                    const { type_groups, types, privacy_types, street, dpto, city, state, zip_code, country, guests, bedrooms, beds, offices, toilets, price, per, description, title } = valores;
-                    try {
-                        const { data } = await nuevoAnuncio({
-                            variables: {
-                                input: {
-                                    type_groups,
-                                    types,
-                                    privacy_types,
-                                    street,
-                                    dpto,
-                                    city,
-                                    state,
-                                    zip_code,
-                                    country,
-                                    guests,
-                                    bedrooms,
-                                    beds,
-                                    offices,
-                                    toilets,
-                                    price,
-                                    per,
-                                    description, 
-                                    title
+            {savedToken ? (
+              <>
+                <div className={styles.stepContainer}>
+                  {mensaje && mostrarMensaje()}
+                  <Formik
+                      innerRef={formRef}
+                      initialValues={{type_groups: '', privacy_types: '', types: '', street: '', dpto: '', city: '', state: '', zip_code: '', country: 'Argentina', guests: 0, bedrooms: 0, beds: 0, offices: 0, toilets: 0, price: 0, per: '', description: '', title: ''}} validationSchema={Yup.object({
+                         type_groups: Yup.string().required("Seleccione grupo"),
+                         types: Yup.string().required("Seleccione tipo"),
+                         privacy_types: Yup.string().required("Seleccione privacidad"),
+                         street: Yup.string().required("Por favor ingrese la calle"),
+                         dpto: Yup.string(),
+                         city: Yup.string().required("Por favor ingrese la ciudad"),
+                         state: Yup.string(),
+                         zip_code: Yup.string(),
+                         country: Yup.string().required("Por favor ingrese el país"),
+                         guests: Yup.number().min(1,"El mínimo de huéspedes es 1").required("Por favor ingrese la cantidad de huéspedes"),
+                         bedrooms: Yup.number().min(1,"El mínimo de habitaciones es 1").required("Por favor ingrese la cantidad de habitaciones"),
+                         beds: Yup.number().min(1,"El mínimo de camas es 1").required("Por favor ingrese la cantidad de camas"),
+                         offices: Yup.number(),
+                         toilets: Yup.number().min(1,"El mínimo de baños es 1").required("Por favor ingrese la cantidad de baños"),
+                         price: Yup.number().required("Por favor ingrese el precio"),
+                         per: Yup.string().required("Por favor seleccione concepto de cobro"),
+                         description: Yup.string().required("Por favor ingrese la descripción"),
+                         title: Yup.string().required("Por favor ingrese un título para el anuncio"),
+                      })}
+                      onSubmit={async (valores) => {
+                      
+                        const { type_groups, types, privacy_types, street, dpto, city, state, zip_code, country, guests, bedrooms, beds, offices, toilets, price, per, description, title } = valores;
+                        try {
+                            const { data } = await nuevoAnuncio({
+                                variables: {
+                                    input: {
+                                        type_groups,
+                                        types,
+                                        privacy_types,
+                                        street,
+                                        dpto,
+                                        city,
+                                        state,
+                                        zip_code,
+                                        country,
+                                        guests,
+                                        bedrooms,
+                                        beds,
+                                        offices,
+                                        toilets,
+                                        price,
+                                        per,
+                                        description, 
+                                        title
+                                    }
                                 }
-                            }
-                        });
+                            });
 
-                        // Usuario creado correctamente
-                        guardarMensaje(`Se creo correctamente el Anuncio: ${data.nuevoAnuncio.title} `);
+                            // Usuario creado correctamente
+                            guardarMensaje(`Se creo correctamente el Anuncio: ${data.nuevoAnuncio.title} `);
 
-                        setTimeout(() => {
-                            guardarMensaje(null);
-                            push({pathname: '/anuncios'});
-                        }, 3000);
+                            setTimeout(() => {
+                                guardarMensaje(null);
+                                push({pathname: '/anuncios'});
+                            }, 3000);
 
-                        // Redirecciona usuario al login
+                            // Redirecciona usuario al login
 
-                    } catch(error) {
-                        guardarMensaje(error.message.replace('GraphQL error: ',''));
+                        } catch(error) {
+                            guardarMensaje(error.message.replace('GraphQL error: ',''));
 
-                        setTimeout(() => {
-                            guardarMensaje(null);
-                        }, 3000);
-                    }
-                  }}
-               >
-                  {({ values }) => 
-                  (
-                    <Form className={styles.formContainer}>
-                      {onFormChange(values)}
-                      {steps[currentStep]}
-                    </Form>
-                  )}
-              </Formik>
-            </div>
-            <div className={styles.stepFooter}>
-              <div className={styles.stepFooterLineBackground}>
-                <div className={styles.stepFooterLineBackgroundProgress} style={{width: (100 / steps.length * (currentStep + 1))+'%'}}></div>
-              </div>
-              <div className={styles.stepFooterButtonsContainer}>
-                <div className={`${styles.stepFooterButtons} ${currentStep == 0 ? styles.disabledButtonBack : ""}`} onClick={handlePrevStep}>Atrás</div>
-                <div className={`${styles.stepFooterButtons} ${dataValidated ? styles.disabledButtonBackNext : ""}`} onClick={handleNextStep}>Siguiente</div>
-              </div>
-            </div>
+                            setTimeout(() => {
+                                guardarMensaje(null);
+                            }, 3000);
+                        }
+                      }}
+                   >
+                      {({ values }) => 
+                      (
+                        <Form className={styles.formContainer}>
+                          {onFormChange(values)}
+                          {steps[currentStep]}
+                        </Form>
+                      )}
+                  </Formik>
+                </div>
+                <div className={styles.stepFooter}>
+                  <div className={styles.stepFooterLineBackground}>
+                    <div className={styles.stepFooterLineBackgroundProgress} style={{width: (100 / steps.length * (currentStep + 1))+'%'}}></div>
+                  </div>
+                  <div className={styles.stepFooterButtonsContainer}>
+                    <div className={`${styles.stepFooterButtons} ${currentStep == 0 ? styles.disabledButtonBack : ""}`} onClick={handlePrevStep}>Atrás</div>
+                    <div className={`${styles.stepFooterButtons} ${dataValidated ? styles.disabledButtonBackNext : ""}`} onClick={handleNextStep}>Siguiente</div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className={styles.becomeHostContainer}>
+                  <div className={styles.quitBecomeHost}>
+                    <Link href="/">
+                      <a>Salir</a>
+                    </Link>
+                  </div>
+                  <div className={styles.titleBecomeHost}>La esencia de Face to Face está en vos</div>
+                  <div className={styles.subtitleBecomeHost}>Convertite en anfitrión. Te ayudaremos durante cada paso de esta aventura.</div>
+                  <div className={styles.registerButtonBecomeHost} onClick={() => {openModal('login')}}>Vamos!</div>
+                </div>
+                <Modal isOpen={modalIsOpen} style={customStyles} onRequestClose={closeModal} contentLabel="Login modal">
+                    <Login form={formToOpen} setIsOpen={setIsOpen} />
+                </Modal>
+              </>
+            )}
           </div>
         </div>
       </div>

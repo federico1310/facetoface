@@ -413,6 +413,8 @@ const Propiedades = () => {
 		setFormatEndDate(moment.unix(parseInt(query.endDate)).format('D MMM'))
 	}, [query]);
 
+	const date = moment.unix(parseInt(query.startDate)).format("MM/DD/YYYY");
+	console.log(date)
 
 
 	if(!isReady)
