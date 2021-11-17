@@ -363,9 +363,7 @@ const Header = () => {
 								</>
 							)}
 							<div className={styles.linkMenuAccount}>
-								<div className={styles.textMenuAccount}>
-									Ayuda
-								</div>
+								<a href="/documents/userHelp.pdf" target="_blank" className={styles.textMenuAccount}>Ayuda</a>
 							</div>
 						</div>
 					</div>
