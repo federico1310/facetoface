@@ -116,6 +116,10 @@ const Header = () => {
 	function closeModal() {
 	    setIsOpen(false);
 	}
+	function userLogout() {
+		localStorage.removeItem('token');
+		window.location.reload();
+	}
 
 	const usuarioContext = useContext(UsuarioContext);
     const { token, modificarToken } = usuarioContext;
@@ -298,7 +302,11 @@ const Header = () => {
 					</nav>
 				</div>
 				<div className={styles.userOptions}>
-					<div className={styles.optionUserOptions}>Sé anfitrión</div>
+					<div className={styles.optionUserOptions}>
+						<Link href="/nuevo-anuncio">
+							<a>Sé anfitrión</a>
+						</Link>
+					</div>
 					<div className={styles.optionUserOptions}>
 						<div className={`${styles.settingsWhite} ${styles.settingsIconContainer}`}>
 							<Image src="/icons/settings_w.png" height={40} width={40} layout="intrinsic" />
@@ -330,9 +338,9 @@ const Header = () => {
 										</div>
 									</div>
 									<div className={styles.linkMenuAccount}>
-										<div className={styles.textMenuAccount}>
-											Convertite en anfitrión
-										</div>
+										<Link href="/nuevo-anuncio">
+										  <a className={styles.textMenuAccount}>Convertite en anfitrión</a>
+										</Link>
 									</div>
 								</>
 							) : (
@@ -346,6 +354,11 @@ const Header = () => {
 										<Link href="/anuncios">
 										  <a className={styles.textMenuAccount}>Administrar anuncios</a>
 										</Link>
+									</div>
+									<div className={styles.linkMenuAccount}>
+										<div className={styles.textMenuAccount} onClick={() => {userLogout()}}>
+											Cerrar sesión
+										</div>
 									</div>
 								</>
 							)}
