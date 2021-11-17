@@ -19,7 +19,7 @@ const Footer = () => {
 				<div className={styles.horizontalContainerFooter}>
 					<div>
 						<div>Sobre FaceToFace</div>
-						<div>Cómo funciona FaceToFace</div>	
+						<a href="/documents/userHelp.pdf" target="_blank">Cómo funciona FaceToFace</a>
 					</div>
 				</div>
 				<div className={styles.horizontalContainerFooter}>
