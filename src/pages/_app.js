@@ -3,16 +3,16 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import client from '../config/apollo';
 import '../styles/globals.css';
 import MomentUtils from '@date-io/moment';
-import PropiedadState from '../context/propiedades/PropiedadState';
+import UsuarioState from '../context/usuarios/UsuarioState';
 
 const MyApp = ({ Component, pageProps }) => {
 	return(
 		<ApolloProvider client={client}>
-			<PropiedadState>
+			<UsuarioState>
 				<MuiPickersUtilsProvider utils={MomentUtils}>
 					<Component {...pageProps} />
 				</MuiPickersUtilsProvider>
-			</PropiedadState>
+			</UsuarioState>
 		</ApolloProvider>
 	);
 }

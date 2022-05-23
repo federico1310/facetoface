@@ -2,12 +2,14 @@ import styles from '../styles/Header.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
 import moment from 'moment';
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { useRouter } from 'next/router';
-
+import Login from '../components/Login';
 import { DatePicker } from '@material-ui/pickers';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import Modal from 'react-modal';
+import UsuarioContext from '../context/usuarios/UsuarioContext';
 
 function useComponentSetVisible(initialIsVisible) {
   const [isComponentVisible, setIsComponentVisible] = useState(
@@ -99,12 +101,41 @@ const Header = () => {
 	const tomorrow = new Date(today);
 		  tomorrow.setDate(tomorrow.getDate() + 1);
 
+	const [modalIsOpen, setIsOpen] = useState(false);
+	const [formToOpen, setFormToOpen] = useState(false);
+	function openModal(which) {
+		setIsComponentVisible(false)
+		setFormToOpen(which)
+	    setIsOpen(true);
+	}
+
+	function afterOpenModal() {
+	   
+	}
+
+	function closeModal() {
+	    setIsOpen(false);
+	}
+	function userLogout() {
+		localStorage.removeItem('token');
+		window.location.reload();
+	}
+
+	const usuarioContext = useContext(UsuarioContext);
+    const { token, modificarToken } = usuarioContext;
+
 	useEffect(function onFirstMount() {
 	    window.onscroll = () => {
 	      setOffset(window.pageYOffset)
 	    }
 	}, []);
 
+	useEffect(() => {
+		if(!token)
+		{
+			modificarToken(localStorage.getItem('token'));
+		}
+	}, [token]);
 	
 	useEffect(() => {
 		if(typeof query != 'undefined' && Object.keys(query).length > 0)
@@ -225,6 +256,27 @@ const Header = () => {
         )
     }
 
+    const customStyles = {
+	  overlay: {
+	  	zIndex: 200,
+	  	backgroundColor: 'rgba(0,0,0,0.6)'
+	  },
+	  content: {
+	    top: '50%',
+	    left: '50%',
+	    right: 'auto',
+	    bottom: 'auto',
+	    marginRight: '-50%',
+	    transform: 'translate(-50%, -50%)',
+	    width: '40%',
+	    padding: '20px',
+	    borderRadius: '4px'
+	  },
+	};
+
+    if(pathname === "/nuevo-anuncio")
+    	return null;
+
 	return(
 		<header className={`${headerStyle} ${pathname !== "/" ? styles.insideSection : ""}`}>
 			<div className={styles.topHeaderContainer}>
@@ -250,7 +302,11 @@ const Header = () => {
 					</nav>
 				</div>
 				<div className={styles.userOptions}>
-					<div className={styles.optionUserOptions}>Sé anfitrión</div>
+					<div className={styles.optionUserOptions}>
+						<Link href="/nuevo-anuncio">
+							<a>Sé anfitrión</a>
+						</Link>
+					</div>
 					<div className={styles.optionUserOptions}>
 						<div className={`${styles.settingsWhite} ${styles.settingsIconContainer}`}>
 							<Image src="/icons/settings_w.png" height={40} width={40} layout="intrinsic" />
@@ -269,35 +325,45 @@ const Header = () => {
 							</div>
 						</div>
 						<div className={`${styles.modalAccountMenu} ${isComponentVisible ? styles.show  : styles.hide}`}>
+							{!token ? (
+								<>
+									<div className={styles.linkMenuAccount}>
+										<div className={styles.textMenuAccount} onClick={() => {openModal('registro')}}>
+											Registrate
+										</div>
+									</div>
+									<div className={styles.linkMenuAccount}>
+										<div className={styles.textMenuAccount} onClick={() => {openModal('login')}}>
+											Iniciar sesión
+										</div>
+									</div>
+									<div className={styles.linkMenuAccount}>
+										<Link href="/nuevo-anuncio">
+										  <a className={styles.textMenuAccount}>Convertite en anfitrión</a>
+										</Link>
+									</div>
+								</>
+							) : (
+								<>
+									<div className={styles.linkMenuAccount}>
+										<Link href="/perfil">
+										  <a className={styles.textMenuAccount}>Cuenta</a>
+										</Link>
+									</div>
+									<div className={styles.linkMenuAccount}>
+										<Link href="/anuncios">
+										  <a className={styles.textMenuAccount}>Administrar anuncios</a>
+										</Link>
+									</div>
+									<div className={styles.linkMenuAccount}>
+										<div className={styles.textMenuAccount} onClick={() => {userLogout()}}>
+											Cerrar sesión
+										</div>
+									</div>
+								</>
+							)}
 							<div className={styles.linkMenuAccount}>
-								<div className={styles.textMenuAccount}>
-									Registrate
-								</div>
-							</div>
-							<div className={styles.linkMenuAccount}>
-								<div className={styles.textMenuAccount}>
-									Iniciar sesión
-								</div>
-							</div>
-							<div className={styles.linkMenuAccount}>
-								<Link href="/perfil">
-								  <a className={styles.textMenuAccount}>Cuenta</a>
-								</Link>
-							</div>
-							<div className={styles.linkMenuAccount}>
-								<Link href="/anuncios">
-								  <a className={styles.textMenuAccount}>Administrar anuncios</a>
-								</Link>
-							</div>
-							<div className={styles.linkMenuAccount}>
-								<div className={styles.textMenuAccount}>
-									Convertite en anfitrión
-								</div>
-							</div>
-							<div className={styles.linkMenuAccount}>
-								<div className={styles.textMenuAccount}>
-									Ayuda
-								</div>
+								<a href="/documents/userHelp.pdf" target="_blank" className={styles.textMenuAccount}>Ayuda</a>
 							</div>
 						</div>
 					</div>
@@ -389,6 +455,9 @@ const Header = () => {
 					
 				</div>
 			</div>
+			<Modal isOpen={modalIsOpen} style={customStyles} onRequestClose={closeModal} contentLabel="Example Modal">
+		        <Login form={formToOpen} setIsOpen={setIsOpen} />
+		    </Modal>
 		</header>
 	);
 }

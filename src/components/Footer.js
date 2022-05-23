@@ -8,15 +8,18 @@ import { useRouter } from 'next/router';
 
 const Footer = () => {
 
-	const router = useRouter();
+	const { pathname, query, isReady, push } = useRouter();
 
+	if(pathname === "/nuevo-anuncio")
+    	return null;
+	
 	return(
 		<footer className={styles.footerContainer}>
 			<div className={`h100 w80 blockHorizontalCenter flex flexFlowColumn`}>
 				<div className={styles.horizontalContainerFooter}>
 					<div>
 						<div>Sobre FaceToFace</div>
-						<div>Cómo funciona FaceToFace</div>	
+						<a href="/documents/userHelp.pdf" target="_blank">Cómo funciona FaceToFace</a>
 					</div>
 				</div>
 				<div className={styles.horizontalContainerFooter}>

@@ -132,16 +132,20 @@ const Homepage = () => {
 	      	</div>
 	      </div>
 	      <div className={`h100 w80 blockHorizontalCenter ${styles.nearPlacesSectionContainer}`}>
-	      	<div className={styles.beHostBannerContainer}>
-		      	<div className={styles.beHostTextContainer}>
-		      		<div className={styles.beHostTitle}>Animate a hospedar</div>
-		      		<div className={styles.beHostSubTitle}>Podrás conseguir dinero extra y conocer nuevas personas</div>
-		      		<div className={styles.fixBeHostButtonPosition}>
-		      			<div className={styles.beHostButton}>Conocé más</div>
-		      		</div>
+		      	<div className={styles.beHostBannerContainer}>
+	      		<Link href="/nuevo-anuncio">
+	      			<a>
+				      	<div className={styles.beHostTextContainer}>
+				      		<div className={styles.beHostTitle}>Animate a hospedar</div>
+				      		<div className={styles.beHostSubTitle}>Podrás conseguir dinero extra y conocer nuevas personas</div>
+				      		<div className={styles.fixBeHostButtonPosition}>
+				      			<div className={styles.beHostButton}>Conocé más</div>
+				      		</div>
+				      	</div>
+			      		<Image src="/assets/anfitrion.jpg" layout="fill" objectFit="cover" className={styles.beHostImage} />
+	      			</a>
+	      		</Link>
 		      	</div>
-	      		<Image src="/assets/anfitrion.jpg" layout="fill" objectFit="cover" className={styles.beHostImage} />
-	      	</div>
 	      </div>
       </div>
     </Layout>
